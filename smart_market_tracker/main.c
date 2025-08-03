@@ -2,6 +2,8 @@
 #include<stdlib.h>
 #include<string.h>
 #include<stdbool.h>
+#include<time.h>
+#include<unistd.h>
 
 #define MAX_DISTRICT 64
 #define MAX_MARKET 20
@@ -36,33 +38,39 @@ int districtCount = 0;
 int validationCheck(char *role) {
     char user[50], pass[50];
     int Role = atoi(role);
-    while(true) {
-        if(Role == 1) {
-            printf("Login as a developer: ");
-            scanf("%s", user);
-            if(strcmp(user, ADMIN) != 0) {
-                printf("This user doesnt exist\n");
-                return false;
-            }
-            printf("Password: ");
-            scanf("%s", pass);
-            if(strcmp(pass, ADMIN_PASS) != 0) {
-                printf("Invalid password\n");
-                return false;
-            }
-            return true;
+
+    if(Role == 2) {
+        printf("Enter username: ");
+        scanf("%s", user);
+        if(strcmp(user, USER1) != 0) {
+            printf("This user doesnt exist\n");
+            return false;
         }
-        else if(Role == 2) {
-            printf("Enter username: ");
-            scanf("%s", user);
-            printf("Password: ");
-            scanf("%s", pass);
-            if(strcmp(user, USER1)!=0 || strcmp(pass, USER1_PASS)!=0) {
-                printf("Invalid user or password\n");
-                return false;
-            }
-            return true;
+        printf("Password: ");
+        scanf("%s", pass);
+        if(strcmp(pass, USER1_PASS) != 0) {
+            printf("Invalid password\n");
+            return false;
         }
+        return true;
+    }
+    else if(Role == 1) {
+        printf("Login as a developer: \n");
+        printf("Username: ");
+        scanf("%s", user);
+        printf("Password: ");
+        scanf("%s", pass);
+        if(strcmp(user, ADMIN)!=0 || strcmp(pass, ADMIN_PASS)!=0) {
+            printf("Admin access denied!!\n");
+            printf("Exiting ");
+            for(int i=0;i<4;i++) {
+                printf(". ");
+                usleep(500000);
+                fflush(stdout);
+            }
+            return false;
+        }
+        return true;
     }
 
 }
