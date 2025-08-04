@@ -34,7 +34,15 @@ typedef struct {
 District district[MAX_DISTRICT];
 int districtCount = 0;
 
-//------------------------- //         unfinished login system
+void delayTime() {
+    for(int i=0;i<4;i++) {
+        printf(". ");
+        usleep(500000);
+        fflush(stdout);
+    }
+}
+
+//------------------------- //       
 int validationCheck(char *role) {
     char user[50], pass[50];
     int Role = atoi(role);
@@ -44,12 +52,14 @@ int validationCheck(char *role) {
         scanf("%s", user);
         if(strcmp(user, USER1) != 0) {
             printf("This user doesnt exist\n");
+            delayTime();
             return false;
         }
         printf("Password: ");
         scanf("%s", pass);
         if(strcmp(pass, USER1_PASS) != 0) {
-            printf("Invalid password\n");
+            printf("Login failed. Ensure your username and password are correct\n");
+            delayTime();
             return false;
         }
         return true;
@@ -102,8 +112,17 @@ int main() {
     int login;
     login = userLogin();
     if(login == -1) {
-        printf("Logged out");
+        printf("Thank you for using our system\nProgram exiting");
+        delayTime();
         return 0;
+    }
+    else if(login == 1) {
+        delayTime();
+        printf("\nAuthentication successful. Admin privileges activated\n");
+    }
+    else if(login == 2) {
+        delayTime();
+        printf("\nLogin successful. Welcome user!");
     }
 
 }
