@@ -4,43 +4,17 @@
 #include<stdbool.h>
 #include<time.h>
 #include<unistd.h>
+#include"utils.h"
+#include"extra.h"
 
-#define MAX_DISTRICT 64
-#define MAX_MARKET 20
-#define MAX_PRODUCT 15
 
 #define ADMIN "admin"
 #define ADMIN_PASS "admin987"
 #define USER1 "user1"
 #define USER1_PASS "user123"
 
-typedef struct {
-    char name[50];
-    float price[7];
-} Product;
-
-typedef struct {
-    char name[50];
-    Product products[MAX_PRODUCT];
-    int productCount;
-} Market;
-
-typedef struct {
-    char name[50];
-    Market markets[MAX_MARKET];
-    int districtCount;
-} District;
-
 District district[MAX_DISTRICT];
 int districtCount = 0;
-
-void delayTime() {
-    for(int i=0;i<4;i++) {
-        printf(". ");
-        usleep(500000);
-        fflush(stdout);
-    }
-}
 
 //------------------------- //       
 int validationCheck(char *role) {
@@ -97,8 +71,7 @@ int userLogin() {
             return -1;
         else if(strcmp(role,"1")==0 || strcmp(role,"2")==0)
             isValid = validationCheck(role);
-        while(getchar() != '\n');
-        
+        clearInputBuffer();
 
         if(isValid && strcmp(role,"1")==0)
             return 1;
@@ -107,6 +80,33 @@ int userLogin() {
     }
 }
 //---------------------------------
+int adminMenu() {
+    int choice;
+    do {
+        printf("\n------ Admin Menu ------\n");
+        printf("1. Add District\n");
+        printf("2. Add Market to District\n");
+        printf("3. Add Product to Market\n");
+        printf("4. Edit Product Price\n");
+        printf("5. Delete (Product / Market / District)\n");
+        printf("6. View All Data\n");
+        printf("7. Search\n");
+        printf("8. Compare Prices\n");
+        printf("9. Price Statistics\n");
+        printf("0. Logout / Exit\n");
+        printf("------------------------\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+        getchar();
+
+        switch(choice) {
+            case 1: /* call addDistrict */ break;
+            case 2: /* addMarket */ break;
+            case 3: /* addProduct */ break;
+            // later codes
+        }
+    } while(choice != 0);
+}
 
 int main() {
     int login;
@@ -122,7 +122,13 @@ int main() {
     }
     else if(login == 2) {
         delayTime();
-        printf("\nLogin successful. Welcome user!");
+        printf("\nLogin successful. Welcome user!\n");
+    }
+
+    if(login == 1) {
+       printf("Redirecting to Admin Dashboard "); 
+       delayTime();
+       adminMenu();
     }
 
 }
