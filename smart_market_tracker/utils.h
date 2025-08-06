@@ -1,9 +1,6 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-void addDistrict();
-void addMarket();
-void addProduct();
 
 #define MAX_DISTRICT 64
 #define MAX_MARKET 20
@@ -24,10 +21,15 @@ typedef struct {
 typedef struct {
     char name[50];
     Market markets[MAX_MARKET];
-    int districtCount;
+    int marketCount;
 } District;
 
-extern District district[MAX_DISTRICT];
+extern District districts[MAX_DISTRICT];
 extern int districtCount;
+
+void addDistrict();
+void addMarket();
+void addProduct();
+void printData();
 
 #endif

@@ -13,7 +13,7 @@
 #define USER1 "user1"
 #define USER1_PASS "user123"
 
-District district[MAX_DISTRICT];
+District districts[MAX_DISTRICT];
 int districtCount = 0;
 
 //------------------------- //       
@@ -22,6 +22,7 @@ int validationCheck(char *role) {
     int Role = atoi(role);
 
     if(Role == 2) {
+        system("clear");
         printf("Enter username: ");
         scanf("%s", user);
         if(strcmp(user, USER1) != 0) {
@@ -39,6 +40,7 @@ int validationCheck(char *role) {
         return true;
     }
     else if(Role == 1) {
+        system("clear");
         printf("Login as a developer: \n");
         printf("Username: ");
         scanf("%s", user);
@@ -80,29 +82,36 @@ int userLogin() {
     }
 }
 //---------------------------------
+int dummyloaded = false;
+int dataloaded = false;
 int adminMenu() {
     int choice;
     do {
+        system("clear");
         printf("\n------ Admin Menu ------\n");
-        printf("1. Add District\n");
-        printf("2. Add Market to District\n");
-        printf("3. Add Product to Market\n");
-        printf("4. Edit Product Price\n");
-        printf("5. Delete (Product / Market / District)\n");
-        printf("6. View All Data\n");
-        printf("7. Search\n");
-        printf("8. Compare Prices\n");
-        printf("9. Price Statistics\n");
+        printf("1. Add Data\n");
+        printf("2. Edit Data\n");
+        //printf("0. Add Product to Market\n");
+        ///printf("0. Edit Product Price\n");
+        printf("3. Delete (Product / Market / District)\n");
+        printf("4. View All Data\n");
+        printf("5. Search\n");
+        printf("6. Compare Prices\n");
+        printf("7. Load dummy data\n");
+        //printf("0. Price Statistics\n");
         printf("0. Logout / Exit\n");
         printf("------------------------\n");
         printf("Enter choice: ");
         scanf("%d", &choice);
-        getchar();
+        clearInputBuffer();
 
         switch(choice) {
             case 1: /* call addDistrict */ break;
             case 2: /* addMarket */ break;
             case 3: /* addProduct */ break;
+            case 4: printData(); break;
+            case 6: /*....*/ break;
+            case 7: loadData(); break;
             // later codes
         }
     } while(choice != 0);
