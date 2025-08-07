@@ -34,13 +34,32 @@ void loadData() {
         delayTime();
         return;
     }
-
-    // Define constants for clarity
     const int markets_to_load = 15;
     const int products_to_load = 15;
     const int price_history_days = 7;
-
+    int i, j, k, l;
+    srand(time(NULL));
+    District *current_district = &districts[districtCount];
+    strcpy(current_district->name, loadDistrict[districtCount]);
     
+    current_district->marketCount = markets_to_load;
+
+    for(j=0;j<markets_to_load;j++) {
+        Market *current_market = &current_district->markets[j];
+        strcpy(current_market->name, loadMarket[j]);
+        current_market->productCount = products_to_load;
+
+        for(k=0;k<products_to_load;k++) {
+            Product *current_product = &current_market->products[k];
+            strcpy(current_product->name, loadProduct[k]);
+            for(l=0;l<price_history_days;l++) {
+                int random_price = 50 + rand() % (250 - 50 + 1);
+                current_product->price[l] = (float)random_price;
+            }
+        }
+    }
+    printf("Data loaded successfully for district %s\n", current_district->name);
+    delayTime();
     districtCount++;
 }
 
