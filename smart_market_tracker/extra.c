@@ -5,6 +5,7 @@
 #include"extra.h"
 #include"utils.h"
 #include<unistd.h>
+#include<ctype.h>
 
 char *loadDistrict[5] = {"Dhaka", "Chittagong", "Dinajpur", "Jashore", "Noakhali"};
 char *loadProduct[15] = {"Rice", "Flour", "Sugar", "Salt", "Lentils", "Cooking Oil",
@@ -76,7 +77,10 @@ void delayTime() {
     }
 }
 
-
+void toLowerStr(char *str) {
+    for(int i=0;str[i]!='\0';i++)
+        str[i] = tolower(str[i]);
+}
 
 /*
 char *loadProducts[30] = {

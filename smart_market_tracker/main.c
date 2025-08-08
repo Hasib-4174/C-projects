@@ -106,8 +106,8 @@ int adminMenu() {
         clearInputBuffer();
 
         switch(choice) {
-            case 1: /* call addDistrict */ break;
-            case 2: /* addMarket */ break;
+            case 1: addData(); break;
+            case 2: /**/ break;
             case 3: /* addProduct */ break;
             case 4: printData(); break;
             case 5: /*....*/ break;

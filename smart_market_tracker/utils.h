@@ -30,6 +30,7 @@ extern int districtCount;
 void addDistrict();
 void addMarket();
 void addProduct();
+void addData();
 void printData();
 
 #endif
