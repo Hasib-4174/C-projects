@@ -49,11 +49,7 @@ int validationCheck(char *role) {
         if(strcmp(user, ADMIN)!=0 || strcmp(pass, ADMIN_PASS)!=0) {
             printf("Admin access denied!!\n");
             printf("Exiting ");
-            for(int i=0;i<4;i++) {
-                printf(". ");
-                usleep(500000);
-                fflush(stdout);
-            }
+            delayTime();
             return false;
         }
         return true;
@@ -108,16 +104,25 @@ int adminMenu() {
         switch(choice) {
             case 1: addData(); break;
             case 2: /**/ break;
-            case 3: /* addProduct */ break;
+            case 3: deleteData(); break;
             case 4: printData(); break;
-            case 5: /*....*/ break;
+            case 5: searchData(); break;
             case 6: /*....*/ break;
             case 7: loadData(); break;
             // later codes
         }
     } while(choice != 0);
 }
+userMenu() {
+    system("clear");
+    printf("=====User Menu=====\n");
+    printf("1. Search Data\n");
+    printf("2. View Data\n");
+    printf("2. Compare Prices\n");
+    printf("------------------------\n");
 
+
+}
 int main() {
     int login;
     login = userLogin();
@@ -139,6 +144,10 @@ int main() {
        printf("Redirecting to Admin Dashboard "); 
        delayTime();
        adminMenu();
+    }
+    else if(login ==2) {
+        userMenu();
+
     }
 
 }

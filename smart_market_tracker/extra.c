@@ -54,7 +54,7 @@ void loadData() {
             Product *current_product = &current_market->products[k];
             strcpy(current_product->name, loadProduct[k]);
             for(l=0;l<price_history_days;l++) {
-                int random_price = 50 + rand() % (250 - 50 + 1);
+                int random_price = 70 + rand() % (150 - 70 + 1);
                 current_product->price[l] = (float)random_price;
             }
         }

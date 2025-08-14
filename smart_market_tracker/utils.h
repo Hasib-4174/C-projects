@@ -32,5 +32,7 @@ void addMarket();
 void addProduct();
 void addData();
 void printData();
+void searchData();
+void deleteData();
 
 #endif

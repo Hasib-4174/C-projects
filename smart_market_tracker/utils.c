@@ -4,8 +4,11 @@
 #include<stdlib.h>
 #include<string.h>
 #include<ctype.h>
+#include<stdbool.h>
 
-
+//int price = district[0].markets[0].products[0].price[0];
+//districts[i].name
+//(*current_district[i]).name
 
 void printData() {
     system("clear");
@@ -36,12 +39,35 @@ void printData() {
             break;
     }
 }
+
+
+void addProduct() {
+    char districtName[50];
+    int choice;
+    char marketName[50];
+    do {
+        system("clear");
+        printf("==Add Product==\n");
+        printf("[1] Select district\n");
+        printf("[0] Cancel\n");
+        scanf("%d", &choice);
+        if(choice == 0)
+            return;
+        else if(choice == 1)
+            break;
+        clearInputBuffer();
+    } while(1);
+    int num;
+
+}
+
 void addMarket() {
     char district[50];
     int choice;
     char marketName[50];
     do {
         system("clear");
+        printf("==Add Market==\n");
         printf("[1] Select district to add market\n");
         printf("[0] Cancel\n");
         printf("Enter choice: ");
@@ -67,13 +93,17 @@ void addMarket() {
             return;
         else {
             for(int i=0;i<districtCount;i++) {
+                bool found = false;
                 if(strstr(districts[i].name, district)!=NULL) {
                     printf("Matches found: \n");
+                    found = true;
                     printf("[%d] %s\n", i+1, districts[i].name);
+                    break;
                 }
-                else {
+                else if(i == districtCount -1 && !found) {
                     printf("District's name not found\n");
                     delayTime();
+                    printf("\n");
                     continue;
                 }
             }
@@ -84,32 +114,42 @@ void addMarket() {
             delayTime();
             continue;
         }
-        break;
+        else if(num == 0)
+            continue;
+        else
+            break;
+
     } while(1);
     District *current_district = &districts[num-1];
     do {
-        Market *current_market = &current_district->markets[current_district->marketCount];
-        printf("Enter market[%d] name: ", current_district->marketCount+1);
-        scanf("%s", marketName);
-        clearInputBuffer();
-        if(strcmp(marketName, "")==0) {
-            printf("Market name cannot be empty\n");
-            continue;
-        }
-        else if(current_district->marketCount < MAX_MARKET) {
+        system("clear");
+        if(current_district->marketCount >= MAX_MARKET) {
             printf("Maximum number of markets for %s district has been reached\n", current_district->name);
             delayTime();
             break;
+        }
+        printf("----- %s -----\n", current_district->name);
+        Market *current_market = &current_district->markets[current_district->marketCount];
+        printf("Enter market[%d] name: ", current_district->marketCount+1);
+        //scanf("%s", marketName);
+        fgets(marketName, sizeof(marketName), stdin);
+        marketName[strcspn(marketName, "\n")] = '\0';
+        //clearInputBuffer();
+        if(strlen(marketName)==0) {
+            printf("Market name cannot be empty\n");
+            delayTime();
+            continue;
         }
         strcpy(current_market->name, marketName);
         current_market->productCount = 0;
         printf("Market added successfully\n");
         districts[num-1].marketCount++;
 
-    } while(current_district->marketCount < MAX_MARKET);
-
+    } while(1);
+    //while(current_district->marketCount > MAX_MARKET);
 
 }
+
 
 void addDistrict() {
     char choice[5];
@@ -117,13 +157,16 @@ void addDistrict() {
     do {
         system("clear");
         printf("Enter district name: ");
-        scanf("%s", districtName);
+        //scanf("%s", districtName);
+        fgets(districtName, sizeof(districtName), stdin);
+        districtName[strcspn(districtName, "\n")] = '\0';
+        //clearInputBuffer();
         if(districtCount >= MAX_DISTRICT) {
             printf("Maximum number of districts reached\n");
             delayTime();
             break;
         } 
-        else if(strcmp(districtName, "")==0)
+        else if(strlen(districtName)==0)
             break;
         
         strcpy(districts[districtCount].name, districtName);
@@ -132,7 +175,7 @@ void addDistrict() {
         delayTime();
         districtCount++;
         do {
-            printf("Want to add more districts? [yes/no]: ");
+            printf("\nWant to add more districts? [yes/no]: ");
             scanf("%s", choice);
             clearInputBuffer();
             toLowerStr(choice);
@@ -166,3 +209,28 @@ void addData() {
 }
 
 
+//....................... search data....
+
+void searchData() {
+
+    //code...
+
+}
+
+
+
+//....................... search data....
+
+//....................... delete data ....
+
+
+
+void deleteData() {
+
+    //code...
+
+}
+
+
+
+//....................... delete data....
