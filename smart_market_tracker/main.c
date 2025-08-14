@@ -113,7 +113,7 @@ int adminMenu() {
         }
     } while(choice != 0);
 }
-userMenu() {
+void userMenu() {
     system("clear");
     printf("=====User Menu=====\n");
     printf("1. Search Data\n");
