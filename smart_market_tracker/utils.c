@@ -12,6 +12,9 @@
 
 void printData() {
     system("clear");
+    greeting();
+    printf("==All Data==\n");
+    printf("Total districts: %d\n", districtCount);
     int i, j, k, l;
     for(i=0;i<districtCount;i++) {
         printf("\n");
@@ -47,6 +50,7 @@ void addProduct() {
     char marketName[50];
     do {
         system("clear");
+        greeting();
         printf("==Add Product==\n");
         printf("[1] Select district\n");
         printf("[0] Cancel\n");
@@ -58,6 +62,9 @@ void addProduct() {
         clearInputBuffer();
     } while(1);
     int numD;
+    system("clear");
+    greeting();
+    printf("==Add Product==\n");
     do {
         numD = 0;
         printf("Enter district number or district's name: \n");
@@ -100,6 +107,7 @@ void addProduct() {
     District *current_district = &districts[numD-1];//   #######
     while(1) {
         system("clear");
+        greeting();
         printf("===Add product===\n");
         if(current_district->marketCount == 0) {
             printf("No markets found for %s district\n", current_district->name);
@@ -155,6 +163,8 @@ void addProduct() {
             int i, j;
             char productName[50];
             system("clear");
+            greeting();
+            printf("==Add Product==\n");
             if(current_market->productCount >= MAX_PRODUCT) {
                 printf("Maximum number of products for %s market has been reached\n", current_market->name);
                 delayTime();
@@ -219,6 +229,7 @@ void addMarket() {
     char marketName[50];
     do {
         system("clear");
+        greeting();
         printf("==Add Market==\n");
         printf("[1] Select district to add market\n");
         printf("[0] Cancel\n");
@@ -233,6 +244,9 @@ void addMarket() {
         clearInputBuffer();
     } while(1);
     int num;
+    system("clear");
+    greeting();
+    printf("==Add Market==\n");
     do {
         num = 0;
         printf("Enter district number or district's name: \n");
@@ -275,12 +289,14 @@ void addMarket() {
     District *current_district = &districts[num-1];
     do {
         system("clear");
+        greeting();
+        printf("==Add Market==\n");
+        printf("========== District[%02d]-%s ==========\n", num, current_district->name);
         if(current_district->marketCount >= MAX_MARKET) {
             printf("Maximum number of markets for %s district has been reached\n", current_district->name);
             delayTime();
             break;
         }
-        printf("----- %s -----\n", current_district->name);
         Market *current_market = &current_district->markets[current_district->marketCount];
         printf("Enter market[%d] name: ", current_district->marketCount+1);
         //scanf("%s", marketName);
@@ -308,6 +324,7 @@ void addDistrict() {
     char districtName[50];
     do {
         system("clear");
+        greeting();
         printf("Enter district name: ");
         //scanf("%s", districtName);
         fgets(districtName, sizeof(districtName), stdin);
@@ -342,6 +359,7 @@ void addData() {
     int choice;
     do {
         system("clear");
+        greeting();
         printf("==Add Data==\n");
         printf("[1] Add District\n");
         printf("[2] Add Market\n");
@@ -360,15 +378,21 @@ void addData() {
     } while(choice != 0);
 }
 
-
-void editMarketName() {
+void editProduct() {
     int choice;
     char marketName[50];
     char districtName[50];
+    greeting();
+    if(districtCount==0) {
+        printf("No districts found\n");
+        delayTime();
+        return;
+    }
     while(1) {
         system("clear");
-        printf("==Edit Market Name==\n");
-        printf("[1] Select district\n");
+        greeting();
+        printf("==Edit Product Name==\n");
+        printf("[1] Select district/market/product\n");
         printf("[0] Cancel\n");
         printf("Enter choice: ");
         scanf("%d", &choice);
@@ -378,7 +402,11 @@ void editMarketName() {
         else if(choice == 1)
             break;
     }
+
     int numD;
+    system("clear");
+    greeting();
+    printf("==Edit Product Name==\n");
     while(1) {
         
         numD = 0;
@@ -422,13 +450,13 @@ void editMarketName() {
     District *current_district = &districts[numD-1];
 
     system("clear");
-    printf("===Edit product===\n");
+    greeting();
+    printf("===Edit Product===\n");
     if(current_district->marketCount == 0) {
-        printf("No markets found for %s district\n", current_district->name);
+        printf("No market found for %s district\n", current_district->name);
         delayTime();
         return;
     }
-    
     int numM;
     while(1) {
 
@@ -471,9 +499,224 @@ void editMarketName() {
             break;
     }
     Market *current_market = &current_district->markets[numM-1];
+
+    while(1) {
+        int i, j;
+        char productName[50];
+        system("clear");
+        greeting();
+        printf("==Edit Product==\n");
+        printf("========== District[%02d]-%s ==========\n", numD, current_district->name);
+        printf("----- Market[%02d]-%s -----\n", numM, current_market->name);
+        for(i=0;i<current_market->productCount;i++) {
+            Product *current_product = &current_market->products[i];
+            printf("Product[%02d] - %-15s\n", i+1, current_product->name);
+        }
+        int numP;
+        while(1) {
+            numP = 0;
+            printf("Enter product number: ");
+            scanf("%d", &numP);
+            clearInputBuffer();
+            if(numP < 1 || numP > current_market->productCount) {
+                printf("Invalid product number\n");
+                printf("enter '-1' to return to Admin Menu\n");
+                
+            } 
+            else if(numP == 0)
+                continue;
+            else if(numP == -1)
+                return;
+            else
+                break;
+        }
+        Product *current_product = &current_market->products[numP-1];
+        
+        while(1) {
+            system("clear");
+            greeting();
+            printf("==Edit Product==\n");
+            printf("Old name: %s\n", current_product->name);
+            printf("Enter new name: ");
+            fgets(productName, sizeof(productName), stdin);
+            productName[strcspn(productName, "\n")] = '\0';
+            if(strlen(productName)==0) {
+                printf("Product name cannot be empty\n");
+                printf("Enter 'exit' to return\n");
+                delayTime();
+                continue;
+            }
+            else if(strcmp(productName, "exit")==0)
+                return;
+            
+            strcpy(current_product->name, productName);
+            printf("Product name updated successfully\n");
+            delayTime();
+            break;
+
+        }
+        char prompt;
+        while(1) {
+            system("clear");
+            greeting();
+            printf("\nDo you want to edit the prices of this product? [y/n]: ");
+            scanf("%c", &prompt);
+            clearInputBuffer();
+            prompt = tolower(prompt);
+            if(prompt == 'n')
+                break;
+            else if(prompt == 'y') {}
+            else {
+                printf("Invalid choice\n");
+                continue;
+            }
+            for(i=0;i<7;i++) {
+                printf("Enter price of product[%s] for day[%d]: ", current_product->name, i+1);
+                scanf("%f", &current_product->price[i]);
+                clearInputBuffer();
+            }
+            printf("Prices updated successfully\n");
+            delayTime();
+            break;
+        }
+        while(1) {
+            printf("\nDo you want to edit more products inside this market? [y/n]: ");
+            scanf("%c", &prompt);
+            clearInputBuffer();
+            prompt = tolower(prompt);
+            if(prompt == 'n')
+                return;
+            else if(prompt == 'y')
+                break;
+            else
+                printf("Invalid choice\n");
+            delayTime();
+        }
+
+    }
+}
+
+void editMarketName() {
+    int choice;
+    char marketName[50];
+    char districtName[50];
+    while(1) {
+        system("clear");
+        greeting();
+        printf("==Edit Market Name==\n");
+        printf("[1] Select district/market\n");
+        printf("[0] Cancel\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+        clearInputBuffer();
+        if(choice == 0)
+            return;
+        else if(choice == 1)
+            break;
+    }
+    int numD;
+    system("clear");
+    greeting();
+    printf("==Edit Market Name==\n");
+    while(1) {
+        
+        numD = 0;
+        printf("Enter district number or district's name: \n");
+        printf("'exit' to return to Admin Menu\n-> ");
+        scanf("%s", districtName);
+        clearInputBuffer();
+        if(strspn(districtName, "0123456789") == strlen(districtName))
+            numD = atoi(districtName);
+        else if(strcmp(districtName, "exit")==0)
+            return;
+        else {
+            bool found = false;
+            for(int i=0;i<districtCount;i++) {
+                if(strstr(districts[i].name, districtName)!=NULL) {
+                    if(!found) printf("Matches found: \n");
+                    found = true;
+                    printf("[%d] %s\n", i+1, districts[i].name);
+                    break;
+                }
+                else if(i == districtCount -1 && !found) {
+                    printf("District's name not found\n");
+                    delayTime();
+                    printf("\n");
+                    continue;
+                }
+            }
+        }
+
+        if(numD != 0 && (numD < 1 || numD > districtCount)) {
+            printf("Invalid district number\n");
+            delayTime();
+            continue;
+        }
+        else if(numD == 0)
+            continue;
+        else
+            break;
+
+    }
+    District *current_district = &districts[numD-1];
+
+    system("clear");
+    greeting();
+    printf("===Edit Market===\n");
+    if(current_district->marketCount == 0) {
+        printf("No markets found for %s district\n", current_district->name);
+        delayTime();
+        return;
+    }
+    
+    int numM;
+
+    while(1) {
+
+        numM = 0;
+        printf("Enter market number or market's name: \n");
+        printf("'exit' to return to Admin Menu\n-> ");
+        scanf("%s", marketName);
+        clearInputBuffer();
+        if(strspn(marketName, "0123456789") == strlen(marketName))
+            numM = atoi(marketName);
+        else if(strcmp(marketName, "exit")==0)
+            return;
+        else {
+            bool found = false;
+            for(int i=0;i<current_district->marketCount;i++) {
+                Market *current_market = &current_district->markets[i];//   #######
+                if(strstr(current_market->name, marketName)!=NULL) {
+                    if(!found) printf("Matches found: \n");
+                    found = true;
+                    printf("[%d] %s\n", i+1, current_market->name);
+                    //break;
+                }
+                else if(i == current_district->marketCount -1 && !found) {
+                    printf("Market's name not found\n");
+                    delayTime();
+                    printf("\n");
+                    continue;
+                }
+            }
+        }
+
+        if(numM != 0 && (numM < 1 || numM > current_district->marketCount)) {
+            printf("Invalid Market number\n");
+            delayTime();
+            continue;
+        }
+        else if(numM == 0)
+            continue;
+        else
+            break;
+    }
+    Market *current_market = &current_district->markets[numM-1];
+
     while(1) {
 
         system("clear");
+        greeting();
         printf("==Edit Market Name==\n");
         printf("Old name: %s\n", current_market->name);
         printf("Enter new name: ");
@@ -502,6 +745,7 @@ void editDistrictName() {
     char districtName[50];
     while(1) {
         system("clear");
+        greeting();
         printf("==Edit District Name==\n");
         printf("[1] Select district\n");
         printf("[0] Cancel\n");
@@ -514,6 +758,9 @@ void editDistrictName() {
             break;
     }
     int num;
+    system("clear");
+    greeting();
+    printf("==Edit District Name==\n");
     while(1) {
 
         num = 0;
@@ -556,6 +803,7 @@ void editDistrictName() {
     District *current_district = &districts[num-1];
     while(1) {
         system("clear");
+        greeting();
         printf("==Edit District Name==\n");
         printf("Old name: %s\n", current_district->name);
         printf("Enter new name: ");
@@ -585,6 +833,7 @@ void editData() {
     int choice;
     do {
         system("clear");
+        greeting();
         printf("=== Edit Data ===\n");
         printf("[1] Edit District Name\n");
         printf("[2] Edit Market Name\n");
@@ -602,7 +851,7 @@ void editData() {
                 editMarketName();
                 break;
             case 3:
-                //editProduct();
+                editProduct();
                 break;
             case 0:
                 return;

@@ -5,6 +5,7 @@ void loadData();
 void clearInputBuffer();
 void delayTime();
 void toLowerStr(char *str);
+void greeting();
 
 
 #endif

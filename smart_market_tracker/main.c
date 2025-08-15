@@ -23,6 +23,7 @@ int validationCheck(char *role) {
 
     if(Role == 2) {
         system("clear");
+        greeting();
         printf("Enter username: ");
         scanf("%s", user);
         if(strcmp(user, USER1) != 0) {
@@ -41,6 +42,7 @@ int validationCheck(char *role) {
     }
     else if(Role == 1) {
         system("clear");
+        greeting();
         printf("Login as a developer: \n");
         printf("Username: ");
         scanf("%s", user);
@@ -62,6 +64,7 @@ int userLogin() {
     while(true) {
         system("clear");
         bool isValid;
+        greeting();
         printf("Login: \n");
         printf("[1] Admin\n[2] User\n[*]: ");
         scanf("%s", role);
@@ -84,6 +87,7 @@ int adminMenu() {
     int choice;
     do {
         system("clear");
+        greeting();
         printf("\n------ Admin Menu ------\n");
         printf("1. Add Data\n");
         printf("2. Edit Data\n");
@@ -115,6 +119,7 @@ int adminMenu() {
 }
 void userMenu() {
     system("clear");
+    greeting();
     printf("=====User Menu=====\n");
     printf("1. Search Data\n");
     printf("2. View Data\n");

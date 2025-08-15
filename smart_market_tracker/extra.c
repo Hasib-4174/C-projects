@@ -7,6 +7,12 @@
 #include<unistd.h>
 #include<ctype.h>
 
+void greeting() {
+    printf("╔════════════════════════╗\n");
+    printf("║  SMART MARKET TRACKER  ║\n");
+    printf("╚════════════════════════╝\n");
+}
+
 char *loadDistrict[5] = {"Dhaka", "Chittagong", "Dinajpur", "Jashore", "Noakhali"};
 char *loadProduct[15] = {"Rice", "Flour", "Sugar", "Salt", "Lentils", "Cooking Oil",
     "Turmeric", "Onions", "Garlic", "Potatoes", "Tomatoes",
