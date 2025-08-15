@@ -111,43 +111,43 @@ void addProduct() {
         int numM;
         //............................................
         while(1) {
-        numM = 0;
-        printf("Enter market number or market's name: \n");
-        printf("'exit' to return to Admin Menu\n-> ");
-        scanf("%s", marketName);
-        clearInputBuffer();
-        if(strspn(marketName, "0123456789") == strlen(marketName))
-            numM = atoi(marketName);
-        else if(strcmp(marketName, "exit")==0)
-            return;
-        else {
-            bool found = false;
-            for(int i=0;i<current_district->marketCount;i++) {
-                Market *current_market = &current_district->markets[i];//   #######
-                if(strstr(current_market->name, marketName)!=NULL) {
-                    if(!found) printf("Matches found: \n");
-                    found = true;
-                    printf("[%d] %s\n", i+1, current_market->name);
-                    //break;
-                }
-                else if(i == current_district->marketCount -1 && !found) {
-                    printf("Market's name not found\n");
-                    delayTime();
-                    printf("\n");
-                    continue;
+            numM = 0;
+            printf("Enter market number or market's name: \n");
+            printf("'exit' to return to Admin Menu\n-> ");
+            scanf("%s", marketName);
+            clearInputBuffer();
+            if(strspn(marketName, "0123456789") == strlen(marketName))
+                numM = atoi(marketName);
+            else if(strcmp(marketName, "exit")==0)
+                return;
+            else {
+                bool found = false;
+                for(int i=0;i<current_district->marketCount;i++) {
+                    Market *current_market = &current_district->markets[i];//   #######
+                    if(strstr(current_market->name, marketName)!=NULL) {
+                        if(!found) printf("Matches found: \n");
+                        found = true;
+                        printf("[%d] %s\n", i+1, current_market->name);
+                        //break;
+                    }
+                    else if(i == current_district->marketCount -1 && !found) {
+                        printf("Market's name not found\n");
+                        delayTime();
+                        printf("\n");
+                        continue;
+                    }
                 }
             }
-        }
 
-        if(numM != 0 && (numM < 1 || numM > current_district->marketCount)) {
-            printf("Invalid Market number\n");
-            delayTime();
-            continue;
-        }
-        else if(numM == 0)
-            continue;
-        else
-            break;
+            if(numM != 0 && (numM < 1 || numM > current_district->marketCount)) {
+                printf("Invalid Market number\n");
+                delayTime();
+                continue;
+            }
+            else if(numM == 0)
+                continue;
+            else
+                break;
         } 
         //..........................
         Market *current_market = &current_district->markets[numM-1];
@@ -364,6 +364,137 @@ void addData() {
 void editMarketName() {
     int choice;
     char marketName[50];
+    char districtName[50];
+    while(1) {
+        system("clear");
+        printf("==Edit Market Name==\n");
+        printf("[1] Select district\n");
+        printf("[0] Cancel\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+        clearInputBuffer();
+        if(choice == 0)
+            return;
+        else if(choice == 1)
+            break;
+    }
+    int numD;
+    while(1) {
+        
+        numD = 0;
+        printf("Enter district number or district's name: \n");
+        printf("'exit' to return to Admin Menu\n-> ");
+        scanf("%s", districtName);
+        clearInputBuffer();
+        if(strspn(districtName, "0123456789") == strlen(districtName))
+            numD = atoi(districtName);
+        else if(strcmp(districtName, "exit")==0)
+            return;
+        else {
+            bool found = false;
+            for(int i=0;i<districtCount;i++) {
+                if(strstr(districts[i].name, districtName)!=NULL) {
+                    if(!found) printf("Matches found: \n");
+                    found = true;
+                    printf("[%d] %s\n", i+1, districts[i].name);
+                    break;
+                }
+                else if(i == districtCount -1 && !found) {
+                    printf("District's name not found\n");
+                    delayTime();
+                    printf("\n");
+                    continue;
+                }
+            }
+        }
+
+        if(numD != 0 && (numD < 1 || numD > districtCount)) {
+            printf("Invalid district number\n");
+            delayTime();
+            continue;
+        }
+        else if(numD == 0)
+            continue;
+        else
+            break;
+
+    }
+    District *current_district = &districts[numD-1];
+
+    system("clear");
+    printf("===Edit product===\n");
+    if(current_district->marketCount == 0) {
+        printf("No markets found for %s district\n", current_district->name);
+        delayTime();
+        return;
+    }
+    
+    int numM;
+    while(1) {
+
+        numM = 0;
+        printf("Enter market number or market's name: \n");
+        printf("'exit' to return to Admin Menu\n-> ");
+        scanf("%s", marketName);
+        clearInputBuffer();
+        if(strspn(marketName, "0123456789") == strlen(marketName))
+            numM = atoi(marketName);
+        else if(strcmp(marketName, "exit")==0)
+            return;
+        else {
+            bool found = false;
+            for(int i=0;i<current_district->marketCount;i++) {
+                Market *current_market = &current_district->markets[i];//   #######
+                if(strstr(current_market->name, marketName)!=NULL) {
+                    if(!found) printf("Matches found: \n");
+                    found = true;
+                    printf("[%d] %s\n", i+1, current_market->name);
+                    //break;
+                }
+                else if(i == current_district->marketCount -1 && !found) {
+                    printf("Market's name not found\n");
+                    delayTime();
+                    printf("\n");
+                    continue;
+                }
+            }
+        }
+
+        if(numM != 0 && (numM < 1 || numM > current_district->marketCount)) {
+            printf("Invalid Market number\n");
+            delayTime();
+            continue;
+        }
+        else if(numM == 0)
+            continue;
+        else
+            break;
+    }
+    Market *current_market = &current_district->markets[numM-1];
+    while(1) {
+
+        system("clear");
+        printf("==Edit Market Name==\n");
+        printf("Old name: %s\n", current_market->name);
+        printf("Enter new name: ");
+        fgets(marketName, sizeof(marketName), stdin);
+        marketName[strcspn(marketName, "\n")] = '\0';
+        if(strlen(marketName)==0) {
+            printf("Market name cannot be empty\n");
+            printf("Enter 'exit' to return\n");
+            delayTime();
+            continue;
+        }
+        else if(strcmp(marketName, "exit")==0)
+            return;
+        
+        strcpy(current_market->name, marketName);
+        printf("Market name updated successfully\n");
+        delayTime();
+        break;
+    }
+    
+
 }
 
 void editDistrictName() {
@@ -445,7 +576,6 @@ void editDistrictName() {
         printf("District name updated successfully\n");
         delayTime();
         break;
-        printf("\n");
 
     }
 
