@@ -103,7 +103,7 @@ int adminMenu() {
 
         switch(choice) {
             case 1: addData(); break;
-            case 2: /**/ break;
+            case 2: editData(); break;
             case 3: deleteData(); break;
             case 4: printData(); break;
             case 5: searchData(); break;

@@ -290,7 +290,7 @@ void addMarket() {
         if(strlen(marketName)==0) {
             printf("Market name cannot be empty\n");
             delayTime();
-            continue;
+            continue;  // 1. break 2. return (fix it.....)
         }
         strcpy(current_market->name, marketName);
         current_market->productCount = 0;
@@ -342,6 +342,7 @@ void addData() {
     int choice;
     do {
         system("clear");
+        printf("==Add Data==\n");
         printf("[1] Add District\n");
         printf("[2] Add Market\n");
         printf("[3] Add Product\n");
@@ -357,6 +358,129 @@ void addData() {
         else if(choice == 3)
             addProduct();
     } while(choice != 0);
+}
+
+
+void editMarketName() {
+    int choice;
+    char marketName[50];
+}
+
+void editDistrictName() {
+    int choice;
+    char districtName[50];
+    while(1) {
+        system("clear");
+        printf("==Edit District Name==\n");
+        printf("[1] Select district\n");
+        printf("[0] Cancel\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+        clearInputBuffer();
+        if(choice == 0)
+            return;
+        else if(choice == 1)
+            break;
+    }
+    int num;
+    while(1) {
+
+        num = 0;
+        printf("Enter district number or district's name: \n");
+        printf("'exit' to return to Admin Menu\n-> ");
+        scanf("%s", districtName);
+        clearInputBuffer();
+        if(strspn(districtName, "0123456789") == strlen(districtName))
+            num = atoi(districtName);
+        else if(strcmp(districtName, "exit")==0)
+            return;
+        else {
+            bool found = false;
+            for(int i=0;i<districtCount;i++) {
+                if(strstr(districts[i].name, districtName)!=NULL) {
+                    if(!found) printf("Matches found: \n");
+                    found = true;
+                    printf("[%d] %s\n", i+1, districts[i].name);
+                    break;
+                }
+                else if(i == districtCount -1 && !found) {
+                    printf("District's name not found\n");
+                    delayTime();
+                    printf("\n");
+                    continue;
+                }
+            }
+        }
+
+        if(num != 0 && (num < 1 || num > districtCount)) {
+            printf("Invalid district number\n");
+            delayTime();
+            continue;
+        }
+        else if(num == 0)
+            continue;
+        else
+            break;
+    }
+    District *current_district = &districts[num-1];
+    while(1) {
+        system("clear");
+        printf("==Edit District Name==\n");
+        printf("Old name: %s\n", current_district->name);
+        printf("Enter new name: ");
+        //scanf("%s", districtName);
+        //clearInputBuffer();
+        fgets(districtName, sizeof(districtName), stdin);
+        districtName[strcspn(districtName, "\n")] = '\0';
+        if(strlen(districtName)==0) {
+            printf("District name cannot be empty\n");
+            printf("Enter 'exit' to return\n");
+            delayTime();
+            continue;
+        }
+        else if(strcmp(districtName, "exit")==0)
+            return;
+        
+        strcpy(current_district->name, districtName);
+        printf("District name updated successfully\n");
+        delayTime();
+        break;
+        printf("\n");
+
+    }
+
+}
+
+void editData() {
+    int choice;
+    do {
+        system("clear");
+        printf("=== Edit Data ===\n");
+        printf("[1] Edit District Name\n");
+        printf("[2] Edit Market Name\n");
+        printf("[3] Edit Product (Name or Prices)\n");
+        printf("[0] Back to Admin Menu\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+        clearInputBuffer();
+        
+        switch(choice) {
+            case 1:
+                editDistrictName();
+                break;
+            case 2:
+                editMarketName();
+                break;
+            case 3:
+                //editProduct();
+                break;
+            case 0:
+                return;
+            default:
+                printf("Invalid choice. Please try again.\n");
+                delayTime();
+        }
+    } while (choice != 0);
 }
 
 

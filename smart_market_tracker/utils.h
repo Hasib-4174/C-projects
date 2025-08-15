@@ -34,5 +34,9 @@ void addData();
 void printData();
 void searchData();
 void deleteData();
+void editData();
+void editDistrictName();
+void editMarketName();
+void editProduct();
 
 #endif
