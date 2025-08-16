@@ -83,7 +83,7 @@ int userLogin() {
 //---------------------------------
 int dummyloaded = false;
 int dataloaded = false;
-int adminMenu() {
+void adminMenu() {
     int choice;
     do {
         system("clear");
@@ -113,7 +113,6 @@ int adminMenu() {
             case 5: searchData(); break;
             case 6: /*....*/ break;
             case 7: loadData(); break;
-            // later codes
         }
     } while(choice != 0);
 }
@@ -156,3 +155,5 @@ int main() {
     }
 
 }
+
+

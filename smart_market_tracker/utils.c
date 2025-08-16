@@ -875,16 +875,213 @@ void searchData() {
 
 //....................... search data....
 
-//....................... delete data ....
-
-
-
 void deleteData() {
+    int choice;
+    int dIndex, mIndex, pIndex;
+    char confirm;
 
-    //code...
+    system("clear");
+    greeting();
+    printf("---delete menu---\n");
+    printf("[1] Delete Product\n");
+    printf("[2] Delete Market\n");
+    printf("[3] Delete District\n");
+    printf("[0] Cancel\n");
+    printf("Enter choice: ");
+    scanf("%d", &choice);
+    clearInputBuffer();
+
+    if (choice == 0) {
+        return;
+    }
+
+    if (districtCount == 0) {
+        printf("No districts available.\n");
+        delayTime();
+        return;
+    }
+
+    switch (choice) {
+        case 1: {
+            system("clear");
+            greeting();
+            printf("---delete menu---\n");
+            printf("----- Districts -----\n");
+
+            for (int d = 0; d < districtCount; d++) {
+                printf("[%d] %s\n", d + 1, districts[d].name);
+            }
+            printf("\n[*] Select district: ");
+            scanf("%d", &dIndex);
+            dIndex--;
+            if (dIndex < 0 || dIndex >= districtCount) {
+                printf("Invalid district selected.\n");
+                delayTime();
+                break;
+            }
+            clearInputBuffer();
+
+            if (districts[dIndex].marketCount == 0) {
+                printf("No markets available in this district.\n");
+                delayTime();
+                break;
+            }
+
+            system("clear");
+            greeting();
+            printf("---delete menu---\n");
+            printf("======= District[%02d]-%s ==========\n", dIndex+1, districts[dIndex].name);
+            printf("----- Markets -----\n");
+
+            for (int m = 0; m < districts[dIndex].marketCount; m++) {
+                printf("[%d] %s\n", m + 1, districts[dIndex].markets[m].name);
+            }
+            printf("[*] Select market: ");
+            scanf("%d", &mIndex);
+            mIndex--;
+            if (mIndex < 0 || mIndex >= districts[dIndex].marketCount) {
+                printf("Invalid market selected.\n");
+                delayTime();
+                break;
+            }
+            clearInputBuffer();
+
+            if (districts[dIndex].markets[mIndex].productCount == 0) {
+                printf("No products available in this market.\n");
+                delayTime();
+                break;
+            }
+
+            system("clear");
+            greeting();
+            printf("---delete menu---\n");
+            printf("======= District[%02d]-%s ==========\n", dIndex+1, districts[dIndex].name);
+            printf("-----Market[%02d]-%s-----\n", mIndex+1, districts[dIndex].markets[mIndex].name);
+            printf("----- Products -----\n");
+
+            for (int p = 0; p < districts[dIndex].markets[mIndex].productCount; p++) {
+                printf("[%d] %s\n", p + 1, districts[dIndex].markets[mIndex].products[p].name);
+            }
+            printf("[*] Select Product: ");
+            scanf("%d", &pIndex);
+            pIndex--;
+            clearInputBuffer();
+            if (pIndex < 0 || pIndex >= districts[dIndex].markets[mIndex].productCount) {
+                printf("Invalid product selected.\n");
+                delayTime();
+                break;
+            }
+
+            printf("Delete '%s'? (y/n): ", districts[dIndex].markets[mIndex].products[pIndex].name);
+            scanf("%c", &confirm);
+            clearInputBuffer();
+
+            if (confirm == 'y' || confirm == 'Y') {
+                for (int i = pIndex; i < districts[dIndex].markets[mIndex].productCount - 1; i++) {
+                    districts[dIndex].markets[mIndex].products[i] = districts[dIndex].markets[mIndex].products[i + 1];
+                }
+                districts[dIndex].markets[mIndex].productCount--;
+                printf("Product deleted successfully.\n");
+                delayTime();
+            }
+            break;
+        }
+
+        case 2: {
+            system("clear");
+            greeting();
+            printf("---delete menu---\n");
+            printf("----- Districts -----\n");
+
+            for (int d = 0; d < districtCount; d++) {
+                printf("[%d] %s\n", d + 1, districts[d].name);
+            }
+            printf("[*] Select district: ");
+            scanf("%d", &dIndex);
+            dIndex--;
+            if (dIndex < 0 || dIndex >= districtCount) {
+                printf("Invalid district selected.\n");
+                delayTime();
+                break;
+            }
+            clearInputBuffer();
+
+            system("clear");
+            greeting();
+            printf("---delete menu---\n");
+            printf("======= District[%02d]-%s ==========\n", dIndex+1, districts[dIndex].name);
+            printf("----- Markets -----\n");
+
+            for (int m = 0; m < districts[dIndex].marketCount; m++) {
+                printf("[%d] %s\n", m + 1, districts[dIndex].markets[m].name);
+            }
+            printf("[*] Select market: ");
+            scanf("%d", &mIndex);
+            mIndex--;
+            if (mIndex < 0 || mIndex >= districts[dIndex].marketCount) {
+                printf("Invalid market selected.\n");
+                delayTime();
+                break;
+            }
+            clearInputBuffer();
+
+            printf("Delete market '%s'? (y/n): ", districts[dIndex].markets[mIndex].name);
+            scanf("%c", &confirm);
+            clearInputBuffer();
+
+            if (confirm == 'y' || confirm == 'Y') {
+                for (int i = mIndex; i < districts[dIndex].marketCount - 1; i++) {
+                    districts[dIndex].markets[i] = districts[dIndex].markets[i + 1];
+                }
+                districts[dIndex].marketCount--;
+                printf("Market deleted successfully.\n");
+                delayTime();
+            }
+            break;
+        }
+
+        case 3: {
+            system("clear");
+            greeting();
+            printf("---delete menu---\n");
+            printf("----- Districts -----\n");
+
+            for (int d = 0; d < districtCount; d++) {
+                printf("[%d] %s\n", d + 1, districts[d].name);
+            }
+            printf("[*] Select district: ");
+            scanf("%d", &dIndex);
+            dIndex--;
+            if (dIndex < 0 || dIndex >= districtCount) {
+                printf("Invalid district selected.\n");
+                delayTime();
+                break;
+            }
+            clearInputBuffer();
+
+            printf("Delete district '%s'? (y/n): ", districts[dIndex].name);
+            scanf("%c", &confirm);
+            clearInputBuffer();
+
+            if (confirm == 'y' || confirm == 'Y') {
+                for (int i = dIndex; i < districtCount - 1; i++) {
+                    districts[i] = districts[i + 1];
+                }
+                districtCount--;
+                printf("District deleted successfully.\n");
+                delayTime();
+            }
+            break;
+        }
+
+        default: {
+            printf("Invalid choice.\n");
+            printf("Returning to Admin Menu...\n");
+            delayTime();
+            break;
+        }
+    }
 
 }
 
 
-
-//....................... delete data....
