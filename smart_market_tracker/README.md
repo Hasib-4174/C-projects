@@ -2,8 +2,8 @@
 
 A console-based C application to track and manage market prices across districts and products. Features modular source files for better code organization.
 
-> 🚧 **Project Status:** In Progress  
-> This project is currently under active development. Features, structure, and documentation may change frequently.
+> ✅ **Project Status:** Completed  
+> This project has been successfully completed as part of our university coursework. All planned features have been implemented, and the source code is organized into modular files for maintainability.
 
 ---
 
@@ -55,6 +55,16 @@ After compiling:
 
 ## 👨‍💻 Collaborators 
 
-- Member1
-- Member2
-- Member3
+- **Shamim Al Azad**  
+  🆔 ID: `2521228642`  
+  🌐 GitHub: [Hasib-4174](https://github.com/Hasib-4174)
+
+- **Mobassher Nahid**  
+  🆔 ID: `2524881642`  
+  🌐 GitHub: [mobassher-nahid](https://github.com/mobassher-nahid)
+
+- **Orpo Bhowmik**  
+  🆔 ID: `2522460642`  
+  🌐 GitHub: [orpobhowmick08-oss](https://github.com/orpobhowmick08-oss)
+
+---

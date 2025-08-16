@@ -66,9 +66,9 @@ int userLogin() {
         bool isValid;
         greeting();
         printf("Login: \n");
-        printf("[1] Admin\n[2] User\n[*]: ");
+        printf("[1] Admin\n[2] User\n[0] Exit\n[*]: ");
         scanf("%s", role);
-        if(strcmp(role, "exit")==0)
+        if(strcmp(role, "exit")==0 || strcmp(role, "0")==0)
             return -1;
         else if(strcmp(role,"1")==0 || strcmp(role,"2")==0)
             isValid = validationCheck(role);
@@ -91,11 +91,9 @@ void adminMenu() {
         printf("\n------ Admin Menu ------\n");
         printf("1. Add Data\n");
         printf("2. Edit Data\n");
-        //printf("0. Add Product to Market\n");
-        ///printf("0. Edit Product Price\n");
         printf("3. Delete (Product / Market / District)\n");
         printf("4. View All Data\n");
-        printf("5. Search\n");
+        printf("5. Search Data\n");
         printf("6. Compare Prices\n");
         printf("7. Load dummy data\n");
         //printf("0. Price Statistics\n");
@@ -116,42 +114,71 @@ void adminMenu() {
         }
     } while(choice != 0);
 }
+
+
 void userMenu() {
-    system("clear");
-    greeting();
-    printf("=====User Menu=====\n");
-    printf("1. Search Data\n");
-    printf("2. View Data\n");
-    printf("2. Compare Prices\n");
-    printf("------------------------\n");
+    int choice;
+
+    do {
+        system("clear");
+        greeting();
+        printf("=====User Menu=====\n");
+        printf("1. Search Data\n");
+        printf("2. View All Data\n");
+        printf("3. Compare Prices\n");
+        printf("0. Logout / Exit\n");
+        printf("------------------------\n");
+
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+        clearInputBuffer();
+        switch(choice) {
+            case 1: searchData(); break;
+            case 2: printData(); break;
+            case 0: 
+                printf("Logging out ");
+                delayTime();
+                return;
+            default:
+                printf("Invalid choice\n");
+
+        }
+    } while(choice != 0);
 
 
 }
+
+
 int main() {
     int login;
-    login = userLogin();
-    if(login == -1) {
-        printf("Thank you for using our system\nProgram exiting");
-        delayTime();
-        return 0;
-    }
-    else if(login == 1) {
-        delayTime();
-        printf("\nAuthentication successful. Admin privileges activated\n");
-    }
-    else if(login == 2) {
-        delayTime();
-        printf("\nLogin successful. Welcome user!\n");
-    }
+    while(1) {
 
-    if(login == 1) {
-       printf("Redirecting to Admin Dashboard "); 
-       delayTime();
-       adminMenu();
-    }
-    else if(login ==2) {
-        userMenu();
+        login = userLogin();
+        if(login == -1) {
+            printf("Thank you for using our system\nProgram exiting");
+            delayTime();
+            return 0;
+        }
+        else if(login == 1) {
+            delayTime();
+            printf("\nAuthentication successful. Admin privileges activated\n");
+        }
+        else if(login == 2) {
+            delayTime();
+            printf("\nLogin successful. Welcome user!\n");
+        }
 
+        if(login == 1) {
+            printf("Redirecting to Admin Dashboard "); 
+            delayTime();
+            adminMenu();
+        }
+        else if(login ==2) {
+            printf("Redirecting to User Dashboard "); 
+            delayTime();
+            userMenu();
+
+        }
     }
 
 }

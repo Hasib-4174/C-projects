@@ -32,6 +32,7 @@ void addMarket();
 void addProduct();
 void addData();
 void printData();
+void printFoundData(int dindex, int mindex);
 void searchData();
 void deleteData();
 void editData();

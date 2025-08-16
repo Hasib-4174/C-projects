@@ -322,6 +322,13 @@ void addMarket() {
 void addDistrict() {
     char choice[5];
     char districtName[50];
+
+    if(districtCount == 0) {
+        printf("No districts found\n");
+        delayTime();
+        return;
+    }
+
     do {
         system("clear");
         greeting();
@@ -863,17 +870,121 @@ void editData() {
 }
 
 
-//....................... search data....
+void printFoundData(int dIndex, int mIndex) {
+    system("clear");
+    greeting();
+    printf("=== Found Data ===\n");
+    printf("======= District[%02d]-%s ==========\n", dIndex+1, districts[dIndex].name);
+    printf("----- Market[%02d]-%s -----\n", mIndex, districts[dIndex].markets[mIndex].name);
+
+    for(int p=0;p<districts[dIndex].markets[mIndex].productCount;p++) {
+
+        printf("Product[%02d]-%-15s | Prices: ", p+1, districts[dIndex].markets[mIndex].products[p].name);
+        for(int l=0;l<7;l++) {
+            printf("%5.0f |", districts[dIndex].markets[mIndex].products[p].price[l]);
+        }
+        printf("\n");
+
+
+    }
+
+    
+}
 
 void searchData() {
 
-    //code...
+    int choice;
+    int dIndex, mIndex;
+    char confirm;
+
+    if(districtCount == 0) {
+        printf("No districts found\n");
+        delayTime();
+        return;
+    }
+
+    while(1) {
+        system("clear");
+        greeting();
+        printf("==Search Data==\n");
+        printf("[1] Select district/market/product\n");
+        printf("[0] Cancel");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+        clearInputBuffer();
+        if(choice == 0)
+            return;
+        else if(choice == 1)
+            break;
+    }
+    while(1) {
+        system("clear");
+        greeting();
+        printf("===Search Data===\n");
+        printf("----- Districts -----\n");
+
+        for (int d = 0; d < districtCount; d++) {
+            printf("[%d] %s\n", d + 1, districts[d].name);
+        }
+        printf("\n[*] Select district: ");
+        scanf("%d", &dIndex);
+        dIndex--;
+        if (dIndex < 0 || dIndex >= districtCount) {
+            printf("Invalid district selected.\n");
+            delayTime();
+            break;
+        }
+        clearInputBuffer();
+
+        if (districts[dIndex].marketCount == 0) {
+            printf("No markets available in this district.\n");
+            delayTime();
+            break;
+        }
+
+        system("clear");
+        greeting();
+        printf("----- Districts -----\n");
+        printf("======= District[%02d]-%s ==========\n", dIndex+1, districts[dIndex].name);
+        printf("----- Markets -----\n");
+
+        for (int m = 0; m < districts[dIndex].marketCount; m++) {
+            printf("[%d] %s\n", m + 1, districts[dIndex].markets[m].name);
+        }
+        printf("[*] Select market: ");
+        scanf("%d", &mIndex);
+        mIndex--;
+        if (mIndex < 0 || mIndex >= districts[dIndex].marketCount) {
+            printf("Invalid market selected.\n");
+            delayTime();
+            break;
+        }
+        clearInputBuffer();
+
+        if (districts[dIndex].markets[mIndex].productCount == 0) {
+            printf("No products available in this market.\n");
+            delayTime();
+            break;
+        }
+
+        printf("Data found..\n");
+        printf("printing data...\n");
+        delayTime();
+
+        printFoundData(dIndex, mIndex);
+        printf("\nDo you want to search more data? [y/n]:");
+        scanf("%c", &confirm);
+        clearInputBuffer();
+        if(confirm == 'y' || confirm == 'Y')
+            continue;
+        else
+            break;
+
+
+    }
 
 }
 
-
-
-//....................... search data....
 
 void deleteData() {
     int choice;
