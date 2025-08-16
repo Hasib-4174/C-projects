@@ -39,5 +39,8 @@ void editData();
 void editDistrictName();
 void editMarketName();
 void editProduct();
+void printComparison(int dIndex, int mIndex);
+void compareData();
+
 
 #endif

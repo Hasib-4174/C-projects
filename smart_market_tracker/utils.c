@@ -28,7 +28,7 @@ void printData() {
                 Product *current_product = &current_market->products[k];
                 printf("Product[%02d]-%-15s | Prices: ", k+1, current_product->name);
                 for(l=0;l<7;l++) {
-                    printf("%5.0f |", current_product->price[l]);
+                    printf("%6.02f |", current_product->price[l]);
                 }
                 printf("\n");
             }
@@ -881,7 +881,7 @@ void printFoundData(int dIndex, int mIndex) {
 
         printf("Product[%02d]-%-15s | Prices: ", p+1, districts[dIndex].markets[mIndex].products[p].name);
         for(int l=0;l<7;l++) {
-            printf("%5.0f |", districts[dIndex].markets[mIndex].products[p].price[l]);
+            printf("%6.02f |", districts[dIndex].markets[mIndex].products[p].price[l]);
         }
         printf("\n");
 
@@ -1196,3 +1196,123 @@ void deleteData() {
 }
 
 
+void printComparison(int dIndex, int mIndex) {
+    printf("\n=== Price Comparison ===\n");
+
+    for (int p = 0; p < districts[dIndex].markets[mIndex].productCount; p++) {
+        Product *current_product = &districts[dIndex].markets[mIndex].products[p];
+
+        float maxPrice = current_product->price[0];
+        float minPrice = current_product->price[0];
+        int maxDay = 1, minDay = 1;
+        float sum = current_product->price[0];
+
+        for (int l = 1; l < 7; l++) {
+            if (current_product->price[l] > maxPrice) {
+                maxPrice = current_product->price[l];
+                maxDay = l + 1;
+            }
+            if (current_product->price[l] < minPrice) {
+                minPrice = current_product->price[l];
+                minDay = l + 1;
+            }
+            sum += current_product->price[l];
+        }
+
+        float avg = sum / 7.0;
+
+        printf("Product[%02d]-%-15s | Highest: %.2f (Day %d) | Lowest: %.2f (Day %d) | Avg: %.2f\n |",
+               p + 1, current_product->name, maxPrice, maxDay, minPrice, minDay, avg);
+    }
+}
+
+
+void compareData() {
+    int choice;
+    int dIndex, mIndex;
+    char confirm;
+
+    if(districtCount == 0) {
+        printf("No districts found\n");
+        delayTime();
+        return;
+    }
+
+    while(1) {
+        system("clear");
+        greeting();
+        printf("== Compare Data ==\n");
+        printf("[1] Select district/market/product\n");
+        printf("[0] Cancel\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+        clearInputBuffer();
+        if(choice == 0)
+            return;
+        else if(choice == 1)
+            break;
+    }
+
+    while(1) {
+        system("clear");
+        greeting();
+        printf("=== Compare Data ===\n");
+        printf("----- Districts -----\n");
+
+        for (int d = 0; d < districtCount; d++) {
+            printf("[%d] %s\n", d + 1, districts[d].name);
+        }
+        printf("\n[*] Select district: ");
+        scanf("%d", &dIndex);
+        dIndex--;
+        if (dIndex < 0 || dIndex >= districtCount) {
+            printf("Invalid district selected.\n");
+            delayTime();
+            break;
+        }
+        clearInputBuffer();
+
+        if (districts[dIndex].marketCount == 0) {
+            printf("No markets available in this district.\n");
+            delayTime();
+            break;
+        }
+
+        system("clear");
+        greeting();
+        printf("----- Districts -----\n");
+        printf("======= District[%02d]-%s ==========\n", dIndex+1, districts[dIndex].name);
+        printf("----- Markets -----\n");
+
+        for (int m = 0; m < districts[dIndex].marketCount; m++) {
+            printf("[%d] %s\n", m + 1, districts[dIndex].markets[m].name);
+        }
+        printf("[*] Select market: ");
+        scanf("%d", &mIndex);
+        mIndex--;
+        if (mIndex < 0 || mIndex >= districts[dIndex].marketCount) {
+            printf("Invalid market selected.\n");
+            delayTime();
+            break;
+        }
+        clearInputBuffer();
+
+        if (districts[dIndex].markets[mIndex].productCount == 0) {
+            printf("No products available in this market.\n");
+            delayTime();
+            break;
+        }
+
+        printFoundData(dIndex, mIndex);
+
+        printComparison(dIndex, mIndex);
+
+        printf("\nDo you want to compare more data? [y/n]: ");
+        scanf("%c", &confirm);
+        clearInputBuffer();
+        if(confirm == 'y' || confirm == 'Y')
+            continue;
+        else
+            break;
+    }
+}

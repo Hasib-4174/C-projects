@@ -96,7 +96,6 @@ void adminMenu() {
         printf("5. Search Data\n");
         printf("6. Compare Prices\n");
         printf("7. Load dummy data\n");
-        //printf("0. Price Statistics\n");
         printf("0. Logout / Exit\n");
         printf("------------------------\n");
         printf("Enter choice: ");
@@ -109,8 +108,12 @@ void adminMenu() {
             case 3: deleteData(); break;
             case 4: printData(); break;
             case 5: searchData(); break;
-            case 6: /*....*/ break;
+            case 6: compareData(); break;
             case 7: loadData(); break;
+            case 0:
+                printf("Logging out ");
+                delayTime();
+                return;
         }
     } while(choice != 0);
 }
@@ -135,6 +138,7 @@ void userMenu() {
         switch(choice) {
             case 1: searchData(); break;
             case 2: printData(); break;
+            case 3: compareData(); break;
             case 0: 
                 printf("Logging out ");
                 delayTime();
