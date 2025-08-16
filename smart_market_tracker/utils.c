@@ -323,8 +323,8 @@ void addDistrict() {
     char choice[5];
     char districtName[50];
 
-    if(districtCount == 0) {
-        printf("No districts found\n");
+    if(districtCount >= MAX_DISTRICT) {
+        printf("District count reached maximum limit\n");
         delayTime();
         return;
     }
